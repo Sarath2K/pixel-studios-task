@@ -4,13 +4,15 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +23,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'unique_id',
+        'dob',
+        'phone',
+        'gender',
+        'address',
+        'status'
     ];
 
     /**
@@ -42,4 +50,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public static function getUserUniqueId($role)
+    {
+        if ($role == 'Customer') {
+            $uniqueIdPattern = CUSTOMER_UNIQUE_ID;
+        } else {
+            $uniqueIdPattern = EMPLOYEE_UNIQUE_ID;
+        }
+
+        return self::getUniqueId($uniqueIdPattern, UNIQUE_ID_LENGTH);
+    }
+
+    public static function getUniqueId($uniqueIdPattern, $uniqueIdLength)
+    {
+        $previousId = self::where('unique_id', 'LIKE', $uniqueIdPattern . '%')->orderBy('unique_id', 'desc')->first()->unique_id ?? ($uniqueIdPattern . str_pad(0, $uniqueIdLength, '0', STR_PAD_LEFT));
+        if (!$previousId) {
+            return $uniqueIdPattern . str_pad(1, $uniqueIdLength, '0', STR_PAD_LEFT);
+        }
+        $previousIdNumber = (int)str_replace($uniqueIdPattern, '', $previousId);
+        return $uniqueIdPattern . str_pad($previousIdNumber + 1, $uniqueIdLength, '0', STR_PAD_LEFT);
+    }
 }
