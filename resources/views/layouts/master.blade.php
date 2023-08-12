@@ -70,14 +70,15 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed"
-                   href="{{ route('get_employees', ['roles' => ['Manager','Sales Executive']]) }}">
+                   href="{{ route('get_employees')}}">
                     <i class="bi bi-card-list"></i>
                     <span>Employees</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('get_customers', ['roles' => ['Customer']]) }}">
+                <a class="nav-link collapsed"
+                   href="{{ route('get_customers') }}">
                     <i class="bi bi-person"></i>
                     <span>Customers</span>
                 </a>

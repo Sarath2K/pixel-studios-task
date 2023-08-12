@@ -45,19 +45,10 @@
                             <div class="col-sm-2">Gender</div>
                             <div class="col-sm-4">{{ $user->gender }}</div>
                         </div>
-
                         <hr>
-                        <h4 class="text-center p-4">Login Details</h4>
-                        <div class="row g-3">
-                            <div class="col-md-6 row">
-                                <div class="col-sm-2">Email</div>
-                                <div class="col-sm-10">{{ $user->email }}</div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="text-left p-4">
-                            <button type="submit" class="btn btn-primary btn-sm">Edit</button>
-                            <button type="reset" class="btn btn-secondary btn-sm">Back</button>
+                        <div class="d-flex justify-content-end">
+                            <a type="button" class="btn btn-primary btn-sm m-1" href="{{ route('users.edit', $user->id) }}">Edit</a>
+                            <a type="button" class="btn btn-secondary btn-sm m-1" href="{{ url()->previous() }}">Back</a>
                         </div>
                     </div>
                 </div>

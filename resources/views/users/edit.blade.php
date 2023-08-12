@@ -164,7 +164,8 @@
                         <hr>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-sm btn-primary m-1">Submit</button>
-                            <button type="reset" class="btn btn-sm btn-secondary m-1">Back</button>
+                            <a type="button" class="btn btn-secondary btn-sm m-1"
+                               href="{{ url()->previous() }}">Back</a>
                         </div>
                     </form>
                 </div>

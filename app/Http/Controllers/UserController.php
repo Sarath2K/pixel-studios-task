@@ -18,9 +18,15 @@ class UserController extends Controller
     public function getEmployeesindex(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::with('roles')
+            $data = User::with(['roles' => function ($query) {
+                $query->whereIn('name', array('Manager', 'Sales Executive'));
+            }])
                 ->withTrashed()
+                ->whereHas('roles', function ($query) {
+                    $query->whereIn('name', array('Manager', 'Sales Executive'));
+                })
                 ->get();
+
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('gender', function ($row) {
@@ -59,12 +65,60 @@ class UserController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('users.index');
+        return view('users.employee-index');
     }
 
     public function getCustomersindex(Request $request)
     {
-        return view('users.index');
+        if ($request->ajax()) {
+            $data = User::with(['roles' => function ($query) {
+                $query->whereIn('name', array('Customer'));
+            }])
+                ->withTrashed()
+                ->whereHas('roles', function ($query) {
+                    $query->whereIn('name', array('Customer'));
+                })
+                ->get();
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('gender', function ($row) {
+                    return ucfirst($row['gender']);
+                })
+                ->addColumn('role', function ($row) {
+                    $role = $row->roles;
+                    return ucfirst($role[0]['name']);
+                })
+                ->addColumn('action', function ($row) {
+
+                    $btn = '<div class="d-flex justify-content-around">'
+                        . '<div>'
+                        . '<a type="button" class="btn btn-sm btn-info" href="' . route('users.show', $row['id']) . '">'
+                        . '<i class="bi bi-eye"></i>'
+                        . '</a>'
+                        . '</div>'
+                        . '<div>'
+                        . '<a type="button" class="btn btn-sm btn-warning" href="' . route('users.edit', $row['id']) . '">'
+                        . '<i class="ri-file-edit-line"></i>'
+                        . '</a>'
+                        . '</div>'
+                        . '<div>'
+                        . '<form action="' . route('users.destroy', $row['id']) . '" method="POST">'
+                        . '<input type="hidden" name="_method" value="DELETE">'
+                        . csrf_field()
+                        . '<button type="submit" class="btn btn-sm btn-danger">'
+                        . '<i class="ri-delete-bin-6-line"></i>'
+                        . '</button>'
+                        . '</form>'
+                        . '</div>'
+                        . '</div>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('users.customer-index');
     }
 
     /**
