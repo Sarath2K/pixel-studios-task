@@ -37,6 +37,19 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<style>
+    .welcome {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Make sure the body takes up the full viewport height */
+        margin: 0; /* Remove default margin */
+    }
+
+    .content {
+        text-align: center;
+    }
+</style>
 <body>
 @yield('master-content')
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i

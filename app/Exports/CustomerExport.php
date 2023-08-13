@@ -8,6 +8,8 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 class CustomerExport implements FromCollection
 {
     /**
+     * Get the customers' data.
+     *
      * @return \Illuminate\Support\Collection
      */
     public function collection()

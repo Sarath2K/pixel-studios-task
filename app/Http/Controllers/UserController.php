@@ -5,7 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Mockery\Exception;
@@ -15,7 +21,11 @@ use Yajra\DataTables\Facades\DataTables;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Get the employees' data.
+     *
+     * @param Request $request
+     * @return Application|Factory|View|\Illuminate\Foundation\Application|JsonResponse
+     * @throws \Exception
      */
     public function getEmployeesindex(Request $request)
     {
@@ -70,6 +80,13 @@ class UserController extends Controller
         return view('users.employee-index');
     }
 
+    /**
+     *  Get the customers' data.
+     *
+     * @param Request $request
+     * @return Application|Factory|View|\Illuminate\Foundation\Application|JsonResponse
+     * @throws \Exception
+     */
     public function getCustomersindex(Request $request)
     {
         if ($request->ajax()) {
@@ -125,6 +142,8 @@ class UserController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
      */
     public function create()
     {
@@ -134,6 +153,9 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param CreateUserRequest $request
+     * @return Application|\Illuminate\Foundation\Application|RedirectResponse|Redirector
      */
     public function store(CreateUserRequest $request)
     {
@@ -146,7 +168,7 @@ class UserController extends Controller
             $role = Role::find($input['role_id']);
 
             if (!$role) {
-                return redirect()->back()->withInput();
+                return redirect()->back()->with('error', 'Role Not Found');
             }
 
             $uniqueId = User::getUserUniqueId($role->name);
@@ -168,19 +190,22 @@ class UserController extends Controller
             DB::commit();
 
             if ($role->name == ROLE_CUSTOMER) {
-                return redirect(route('get_customers'));
+                return redirect(route('get_customers'))->with('success', 'Employee Created Successfully!');
             } else {
-                return redirect(route('get_employees'));
+                return redirect(route('get_employees'))->with('success', 'Customer Created Successfully!');
             }
         } catch (\Exception $e) {
             DB::rollBack();
             logError($e, 'Error While Storing User Details', 'app/Http/Controllers/UserController.php');
-            return redirect()->back()->withInput();
+            return redirect()->back()->with('error', 'Please Try Again Later!');
         }
     }
 
     /**
      * Display the specified resource.
+     *
+     * @param string $id
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
      */
     public function show(string $id)
     {
@@ -190,6 +215,9 @@ class UserController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param string $id
+     * @return Application|Factory|View|\Illuminate\Foundation\Application
      */
     public function edit(string $id)
     {
@@ -200,6 +228,10 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param UpdateUserRequest $request
+     * @param string $id
+     * @return RedirectResponse
      */
     public function update(UpdateUserRequest $request, string $id)
     {
@@ -228,16 +260,19 @@ class UserController extends Controller
             ]);
 
             DB::commit();
-            return redirect()->back();
+            return redirect()->back()->with('success', 'User Updated Successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
             logError($e, 'Error While Updating User Details', 'app/Http/Controllers/UserController.php');
-            return redirect()->back()->withInput();
+            return redirect()->back()->with('error', 'Please Try Again Later!');
         }
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param string $id
+     * @return RedirectResponse
      */
     public function destroy(string $id)
     {
@@ -249,11 +284,11 @@ class UserController extends Controller
             ]);
             $user->delete();
             DB::commit();
-            return redirect()->back();
+            return redirect()->with('success', 'Deactivated the user successfully!');;
         } catch (Exception $exception) {
             DB::rollBack();
             logError($exception, 'Error While Deleting User', 'app/Http/Controllers/UserController.php');
-            return redirect()->back()->withInput();
+            return redirect()->back()->with('error', 'Please Try Again Later!');
         }
     }
 }

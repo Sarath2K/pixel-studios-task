@@ -11,7 +11,7 @@
                 </ol>
             </nav>
         </div>
-
+        @include('layouts.alert')
         <section class="section">
             <div class="card">
                 <div class="card-body p-2">

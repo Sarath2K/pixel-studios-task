@@ -12,7 +12,7 @@
                 </ol>
             </nav>
         </div><!-- End Page Title -->
-
+        @include('layouts.alert')
         <section class="section">
             <div class="card container">
                 <div class="card-body p-4">

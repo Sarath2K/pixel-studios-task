@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class ExportController extends Controller
 {
     /**
+     * Generate the employees details in xlsx file.
+     *
      * @param Request $request
      * @return BinaryFileResponse
      */
@@ -20,6 +22,8 @@ class ExportController extends Controller
     }
 
     /**
+     * Generate the customers details in xlsx file.
+     *
      * @param Request $request
      * @return BinaryFileResponse
      */
