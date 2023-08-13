@@ -89,7 +89,7 @@
 
                             <label for="role" class="col-sm-2 col-form-label">Staff Role</label>
                             <div class="col-sm-4">
-                                <select class="form-select states" aria-label="Default select example" id="role"
+                                <select class="form-select states" aria-label="Default select example" id="role_id"
                                         name="role_id">
                                     <option selected disabled class="text-center">-- Select Role --</option>
                                     @forelse($roles as $role)
@@ -154,8 +154,9 @@
                         </div>
                         <hr>
                         <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-sm btn-primary m-1">Submit</button>
-                            <button type="reset" class="btn btn-sm btn-secondary m-1">Back</button>
+                            <button type="submit" class="btn btn-sm btn-primary m-1">Create</button>
+                            <a type="button" class="btn btn-secondary btn-sm m-1"
+                               href="{{ url()->previous() }}">Back</a>
                         </div>
                     </form>
                 </div>

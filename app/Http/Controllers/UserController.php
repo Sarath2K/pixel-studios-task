@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -133,11 +135,11 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
         DB::beginTransaction();
         try {
-            $input = $request->only(['name', 'email', 'password', 'unique_id', 'dob', 'phone', 'gender', 'address', 'status', 'role_id']);
+            $input = $request->only(['name', 'email', 'password', 'dob', 'phone', 'gender', 'address', 'status', 'role_id']);
             $input['password'] = Hash::make($input['password']);
             $input['name'] = ucwords($input['name']);
 
@@ -199,11 +201,11 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
         DB::beginTransaction();
         try {
-            $input = $request->only(['name', 'email', 'password', 'unique_id', 'dob', 'phone', 'gender', 'address', 'status', 'role_id']);
+            $input = $request->only(['name', 'email', 'password', 'dob', 'phone', 'gender', 'address', 'status', 'role_id']);
             $input['password'] = Hash::make($input['password']);
             $input['name'] = ucwords($input['name']);
 

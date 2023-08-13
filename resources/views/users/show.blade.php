@@ -23,7 +23,7 @@
                                 $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
                             @endphp
                             <div class="col-sm-2">Unique Id</div>
-                            <div class="col-sm-5">{{ $user->unique_id }}</div>
+                            <div class="col-sm-5">{{ $user->unique_id??'-' }}</div>
                             <div
                                 class="col-sm-5">{!! $generator->getBarcode( $user->unique_id, $generator::TYPE_CODE_128) !!}
                             </div>
@@ -38,7 +38,7 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-2">DOB</div>
-                            <div class="col-sm-10">{{ $user->dob }}</div>
+                            <div class="col-sm-10">{{ $user->dob??'-' }}</div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-2">Address</div>
