@@ -27,6 +27,14 @@
                         </li>
                     </ul>
 
+                    <div class="d-flex justify-content-end m-4">
+                        <button type="button" class="btn btn-outline-primary btn-sm" data-export-type-customers="xlsx">
+                            <i
+                                class="bi bi-file-earmark-excel-fill"></i> Export
+                        </button>
+                    </div>
+                    <hr>
+
                     <div class="p-2 table-responsive">
                         <table class="table table-bordered data-table w-100">
                             <thead>
@@ -97,6 +105,37 @@
                         searchable: false
                     },
                 ]
+            });
+        });
+
+        $(document).ready(function () {
+            $('.btn[data-export-type-customers]').click(function () {
+                let exportType = $(this).data('export-type-customers');
+
+                $.ajax({
+                    url: '{{ route('export_customers') }}',
+                    type: 'GET',
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    success: function (response) {
+                        let blob = new Blob([response]);
+                        let link = document.createElement('a');
+                        let timestamp = new Date().toISOString().replace(/[-:.T]/g, "");
+
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = 'Customers_' + timestamp + '.xlsx';
+                        link.style.display = 'none';
+                        document.body.appendChild(link);
+
+                        link.click();
+
+                        document.body.removeChild(link);
+                    },
+                    error: function (xhr) {
+                        console.log(xhr.responseText);
+                    }
+                });
             });
         });
     </script>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/users', UserController::class);
     Route::get('/get-employees', [UserController::class, 'getEmployeesindex'])->name('get_employees');
     Route::get('/get-customers', [UserController::class, 'getCustomersindex'])->name('get_customers');
+
+    Route::get('/export-employees', [ExportController::class, 'exportEmployees'])->name('export_employees');
+    Route::get('/export-customers', [ExportController::class, 'exportCustomers'])->name('export_customers');
 });
 
 require __DIR__ . '/auth.php';
