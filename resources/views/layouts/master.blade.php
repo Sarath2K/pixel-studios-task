@@ -4,7 +4,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="#" class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">Pivot TechX</span>
+                <span class="d-none d-lg-block">Pixel Studios</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -21,7 +21,7 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                        <img src="{{ asset('assets/img/profile-img.jpg') }}" alt="Profile" class="rounded-circle">
                         <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->name }}</span>
                     </a><!-- End Profile Iamge Icon -->
 
@@ -45,7 +45,7 @@
                         <li>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <a class="dropdown-item" href="route('logout')"
+                                <a class="dropdown-item" href=""
                                    onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                     <i class="bi bi-box-arrow-right"></i>
@@ -62,14 +62,15 @@
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item">
-                <a class="nav-link " href="index.html">
+                <a class="nav-link  {{ request()->routeIs('dashboard') ? 'active' : 'collapsed' }}"
+                   href="{{ route('dashboard') }}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed"
+                <a class="nav-link {{ request()->routeIs('get_employees') ? 'active' : 'collapsed' }}"
                    href="{{ route('get_employees')}}">
                     <i class="bi bi-card-list"></i>
                     <span>Employees</span>
@@ -77,7 +78,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed"
+                <a class="nav-link {{ request()->routeIs('get_customers') ? 'active' : 'collapsed' }}"
                    href="{{ route('get_customers') }}">
                     <i class="bi bi-person"></i>
                     <span>Customers</span>

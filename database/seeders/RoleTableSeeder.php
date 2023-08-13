@@ -18,7 +18,7 @@ class RoleTableSeeder extends Seeder
         DB::table('roles')->insert([
             [
                 'id' => 1,
-                'name' => 'Admin',
+                'name' => ROLE_ADMIN,
                 'slug' => 'admin',
                 'guard_name' => 'web',
                 'created_at' => now(),
@@ -26,7 +26,7 @@ class RoleTableSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'name' => 'Manager',
+                'name' => ROLE_EMPLOYEE_MANAGER,
                 'slug' => 'manager',
                 'guard_name' => 'web',
                 'created_at' => now(),
@@ -34,7 +34,7 @@ class RoleTableSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'name' => 'Sales Executive',
+                'name' => ROLE_EMPLOYEE_SALES_EXECUTIVE,
                 'slug' => 'sales-executive',
                 'guard_name' => 'web',
                 'created_at' => now(),
@@ -42,7 +42,7 @@ class RoleTableSeeder extends Seeder
             ],
             [
                 'id' => 4,
-                'name' => 'Customer',
+                'name' => ROLE_CUSTOMER,
                 'slug' => 'customer',
                 'guard_name' => 'web',
                 'created_at' => now(),

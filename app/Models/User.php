@@ -51,9 +51,15 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     * Generate The Unique Id.
+     *
+     * @param $role
+     * @return string
+     */
     public static function getUserUniqueId($role)
     {
-        if ($role == 'Customer') {
+        if ($role == ROLE_CUSTOMER) {
             $uniqueIdPattern = CUSTOMER_UNIQUE_ID;
         } else {
             $uniqueIdPattern = EMPLOYEE_UNIQUE_ID;
@@ -62,6 +68,13 @@ class User extends Authenticatable
         return self::getUniqueId($uniqueIdPattern, UNIQUE_ID_LENGTH);
     }
 
+    /**
+     * Get The Unique Id.
+     *
+     * @param $uniqueIdPattern
+     * @param $uniqueIdLength
+     * @return string
+     */
     public static function getUniqueId($uniqueIdPattern, $uniqueIdLength)
     {
         $previousId = self::where('unique_id', 'LIKE', $uniqueIdPattern . '%')->orderBy('unique_id', 'desc')->first()->unique_id ?? ($uniqueIdPattern . str_pad(0, $uniqueIdLength, '0', STR_PAD_LEFT));

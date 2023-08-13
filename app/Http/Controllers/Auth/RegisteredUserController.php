@@ -32,17 +32,25 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
+            'phone' => ['required', 'numeric', 'min:10', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $uniqueId = User::getUserUniqueId(ROLE_CUSTOMER);
+
         $user = User::create([
+            'unique_id' => $uniqueId,
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
+            'gender' => $request->gender,
             'password' => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
+
+        $user->assignRole(ROLE_CUSTOMER);
 
         Auth::login($user);
 

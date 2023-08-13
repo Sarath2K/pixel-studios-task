@@ -31,7 +31,6 @@
                         <table class="table table-bordered data-table w-100">
                             <thead>
                             <tr class="table-primary text-center">
-                                <th>Profile</th>
                                 <th>Name</th>
                                 <th>Unique ID</th>
                                 <th>Designation</th>
@@ -63,10 +62,6 @@
                 serverSide: true,
                 ajax: "{{ route('get_employees') }}",
                 columns: [
-                    // {
-                    //     data: 'profile',
-                    //     name: 'profile'
-                    // },
                     {
                         data: 'name',
                         name: 'name'

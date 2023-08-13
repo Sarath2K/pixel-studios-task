@@ -164,7 +164,12 @@ class UserController extends Controller
             $user->assignRole($role->name);
 
             DB::commit();
-            return redirect(route('users.create'));
+
+            if ($role->name == ROLE_CUSTOMER) {
+                return redirect(route('get_customers'));
+            } else {
+                return redirect(route('get_employees'));
+            }
         } catch (\Exception $e) {
             DB::rollBack();
             logError($e, 'Error While Storing User Details', 'app/Http/Controllers/UserController.php');

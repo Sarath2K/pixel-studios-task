@@ -7,6 +7,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('get_employees') }}">Employee</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('get_customers') }}">Customers</a></li>
                     <li class="breadcrumb-item active">Edit</li>
                 </ol>
             </nav>
@@ -123,14 +124,14 @@
                                 <fieldset class="mb-3 d-flex justify-content-around">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="status" id="status_active"
-                                               value="{{ EMPLOYEE_STATUS_ACTIVE }}" {{ $user->status === EMPLOYEE_STATUS_ACTIVE ? 'checked' : '' }}>
+                                               value="{{ STATUS_ACTIVE }}" {{ $user->status === STATUS_ACTIVE ? 'checked' : '' }}>
                                         <label class="form-check-label" for="status_active">
                                             Active
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="status" id="status_inactive"
-                                               value="{{ EMPLOYEE_STATUS_INACTIVE }}" {{ $user->status === EMPLOYEE_STATUS_INACTIVE ? 'checked' : '' }}>
+                                               value="{{ STATUS_INACTIVE }}" {{ $user->status === STATUS_INACTIVE ? 'checked' : '' }}>
                                         <label class="form-check-label" for="status_inactive">
                                             Inactive
                                         </label>

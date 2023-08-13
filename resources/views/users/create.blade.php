@@ -114,14 +114,14 @@
                                 <fieldset class="mb-3 d-flex justify-content-around">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="status" id="status_active"
-                                               value="{{ EMPLOYEE_STATUS_ACTIVE }}" checked>
+                                               value="{{ STATUS_ACTIVE }}" checked>
                                         <label class="form-check-label" for="status_active">
                                             Active
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="status" id="status_inactive"
-                                               value="{{ EMPLOYEE_STATUS_INACTIVE }}">
+                                               value="{{ STATUS_INACTIVE }}">
                                         <label class="form-check-label" for="status_inactive">
                                             Inactive
                                         </label>
